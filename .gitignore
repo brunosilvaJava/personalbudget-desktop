@@ -1,0 +1,67 @@
+# Diretórios de build
+target/
+build/
+# Permitir o Maven Wrapper, necessário para build automatizados
+!.mvn/wrapper/maven-wrapper.jar
+# Se houver pastas "target" dentro de módulos (src), mantenha-as
+!**/src/main/**/target/
+!**/src/test/**/target/
+# Se houver pastas "build" dentro de módulos, mantenha-as
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+# Configurações específicas do ambiente (geralmente não compartilhadas)
+.idea/
+# Caso queira compartilhar arquivos de configuração específicos, descomente a linha abaixo e ajuste conforme necessário:
+#!.idea/codeStyles/
+# Arquivos de projeto (pode ser compartilhado se a equipe concordar)
+*.iml
+# Arquivos antigos ou específicos
+*.iws
+*.ipr
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Arquivos do sistema ###
+.DS_Store
+
+### Arquivos compilados e logs ###
+*.class
+*.log
+
+### Arquivos específicos de BlueJ ###
+*.ctxt
+
+### Mobile Tools for Java (J2ME) ###
+.mtj.tmp/
+
+### Arquivos de pacotes e distribuíveis ###
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+### Logs de falhas da JVM ###
+hs_err_pid*
+replay_pid*
