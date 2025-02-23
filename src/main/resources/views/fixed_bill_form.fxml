@@ -11,102 +11,100 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-          prefHeight="730.0" prefWidth="1010.0" vgap="10" xmlns="http://javafx.com/javafx/23.0.1"
-          fx:controller="com.bts.personalbudgetdesktop.controller.fixedbill.FixedBillFormController">
+<GridPane hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="730.0" prefWidth="1010.0" vgap="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bts.personalbudgetdesktop.controller.fixedbill.FixedBillFormController">
     <padding>
-        <Insets bottom="15" left="15" right="15" top="15"/>
+        <Insets bottom="15" left="15" right="15" top="15" />
     </padding>
-    <Label fx:id="fixedBillCode" visible="false" GridPane.columnIndex="1"/>
+    <Label fx:id="codeField" visible="false" GridPane.columnIndex="1" />
 
-    <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Cadastrar Conta Fixa"/>
+    <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Cadastrar Conta Fixa" />
 
-    <Label text="Tipo" GridPane.rowIndex="2"/>
+    <Label text="Tipo" GridPane.rowIndex="2" />
     <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
-        <RadioButton fx:id="debitRadio" selected="true" text="Saída"/>
-        <RadioButton fx:id="creditRadio" text="Entrada"/>
+        <RadioButton fx:id="debitRadio" selected="true" text="Saída" />
+        <RadioButton fx:id="creditRadio" text="Entrada" />
     </HBox>
 
-    <Label text="Descrição:" GridPane.rowIndex="3"/>
-    <TextField fx:id="descriptionField" promptText="Digite a descrição" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+    <Label text="Descrição:" GridPane.rowIndex="3" />
+    <TextField fx:id="descriptionField" promptText="Digite a descrição" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-    <Label text="Valor (R$):" GridPane.rowIndex="4"/>
-    <TextField fx:id="amountField" promptText="Ex: 2000" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    <Label text="Valor (R$):" GridPane.rowIndex="4" />
+    <TextField fx:id="amountField" promptText="Ex: 2000" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-    <Label text="Tipo de Recorrência:" GridPane.rowIndex="5"/>
+    <Label text="Tipo de Recorrência:" GridPane.rowIndex="5" />
     <HBox fx:id="recurrenceTypeHBox" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-        <RadioButton fx:id="weeklyRadio" mnemonicParsing="false" onAction="#updateVisibleRecurrenceTypePane"
-                     selected="true" text="Semanal" userData="WEEKLY"/>
-        <RadioButton fx:id="monthlyRadio" onAction="#updateVisibleRecurrenceTypePane" text="Mensal" userData="MONTHLY"/>
-        <RadioButton fx:id="yearlyRadio" onAction="#updateVisibleRecurrenceTypePane" text="Anual" userData="YEARLY"/>
+        <RadioButton fx:id="weeklyRadio" mnemonicParsing="false" onAction="#updateVisibleRecurrenceTypePane" selected="true" text="Semanal" userData="WEEKLY" />
+        <RadioButton fx:id="monthlyRadio" onAction="#updateVisibleRecurrenceTypePane" text="Mensal" userData="MONTHLY" />
+        <RadioButton fx:id="yearlyRadio" onAction="#updateVisibleRecurrenceTypePane" text="Anual" userData="YEARLY" />
     </HBox>
 
     <VBox alignment="CENTER_LEFT" spacing="5" GridPane.rowIndex="6">
-        <Label text="Selecione os dias:"/>
+        <Label text="Selecione os dias:" />
     </VBox>
 
     <StackPane GridPane.columnIndex="1" GridPane.rowIndex="6">
 
         <FlowPane fx:id="weeklyDaysPane" columnHalignment="CENTER" hgap="5" vgap="5">
-            <CheckBox text="Dom" userData="1"/>
-            <CheckBox text="Seg" userData="2"/>
-            <CheckBox text="Ter" userData="3"/>
-            <CheckBox text="Qua" userData="4"/>
-            <CheckBox text="Qui" userData="5"/>
-            <CheckBox text="Sex" userData="6"/>
-            <CheckBox text="Sáb" userData="7"/>
+            <CheckBox text="Dom" userData="SUNDAY" />
+            <CheckBox text="Seg" userData="MONDAY" />
+            <CheckBox text="Ter" userData="TUESDAY" />
+            <CheckBox text="Qua" userData="WEDNESDAY" />
+            <CheckBox text="Qui" userData="THURSDAY" />
+            <CheckBox text="Sex" userData="FRIDAY" />
+            <CheckBox text="Sáb" userData="SATURDAY" />
         </FlowPane>
 
         <HBox fx:id="monthlyDaysPane" spacing="5" visible="false">
-            <ComboBox fx:id="monthlyDayComboBox" visibleRowCount="5"/>
+            <ComboBox fx:id="monthlyDayComboBox" visibleRowCount="5" />
         </HBox>
 
         <HBox fx:id="yearlyDaysPane" spacing="5" visible="false">
             <TextField fx:id="yearlyDayField" promptText="Ex: 25/12">
                 <font>
-                    <Font size="10.0"/>
+                    <Font size="10.0" />
                 </font>
             </TextField>
         </HBox>
     </StackPane>
 
-    <Label text="Data Inicial:" GridPane.rowIndex="7"/>
-    <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+    <Label text="Data Inicial:" GridPane.rowIndex="7" />
+    <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-    <Label text="Data Final:" GridPane.rowIndex="8"/>
-    <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+    <Label text="Data Final:" GridPane.rowIndex="8" />
+    <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="8" />
 
-    <Label text="Status:" GridPane.rowIndex="9"/>
-    <RadioButton fx:id="activeRadio" selected="true" text="Conta Fixa Ativa" GridPane.columnIndex="1"
-                 GridPane.rowIndex="9"/>
+    <Label text="Status:" GridPane.rowIndex="9" />
+    <RadioButton fx:id="activeRadio" selected="true" text="Conta Fixa Ativa" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
     <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="10">
-        <Button onAction="#cleanForm" text="Limpar"/>
-        <Button onAction="#handleSubmit" text="Salvar"/>
+        <Button onAction="#cleanForm" text="Limpar" />
+        <Button onAction="#actionSaveButton" text="Salvar" />
     </HBox>
 
-    <TableView fx:id="fixedBillTable" prefHeight="387.0" prefWidth="983.0" GridPane.columnSpan="2"
-               GridPane.rowIndex="12" VBox.vgrow="ALWAYS">
+    <TableView fx:id="fixedBillTable" prefHeight="387.0" prefWidth="983.0" GridPane.columnSpan="2" GridPane.rowIndex="12" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn fx:id="operationTypeColumn" text="Tipo"/>
-            <TableColumn fx:id="descriptionColumn" prefWidth="220.0" text="Descrição"/>
-            <TableColumn fx:id="recurrenceTypeColumn" prefWidth="100" text="Recorrência"/>
-            <TableColumn fx:id="daysColumn" prefWidth="150.0" text="Dia"/>
-            <TableColumn fx:id="amountColumn" prefWidth="150.0" text="Valor (R$)"/>
-            <TableColumn fx:id="startDateColumn" prefWidth="110.0" resizable="false" text="Início"/>
-            <TableColumn fx:id="endDateColumn" prefWidth="110.0" resizable="false" text="Fim"/>
-            <TableColumn fx:id="activeColumn" prefWidth="60.0" resizable="false" text="Ativo"/>
+            <TableColumn fx:id="codeColumn" text="Code" visible="false" />
+            <TableColumn fx:id="operationTypeColumn" text="Tipo" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="220.0" text="Descrição" />
+            <TableColumn fx:id="recurrenceTypeColumn" prefWidth="100" text="Recorrência" />
+            <TableColumn fx:id="daysColumn" prefWidth="150.0" text="Dia" />
+            <TableColumn fx:id="amountColumn" prefWidth="150.0" text="Valor (R$)" />
+            <TableColumn fx:id="startDateColumn" prefWidth="110.0" resizable="false" text="Início" />
+            <TableColumn fx:id="endDateColumn" prefWidth="110.0" resizable="false" text="Fim" />
+            <TableColumn fx:id="activeColumn" prefWidth="60.0" resizable="false" text="Ativo" />
         </columns>
     </TableView>
-    <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <Separator prefWidth="200.0" GridPane.rowIndex="1"/>
-    <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
-
+    <Separator prefWidth="200.0" GridPane.rowIndex="1" />
+    <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Separator prefWidth="200.0" GridPane.rowIndex="11" />
+    <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="11" />
 </GridPane>

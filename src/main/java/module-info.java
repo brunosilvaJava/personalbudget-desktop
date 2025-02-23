@@ -1,8 +1,6 @@
 module com.bts.personalbudgetdesktop {
     requires javafx.controls;
     requires javafx.fxml;
-    requires javafx.web;
-
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
@@ -13,6 +11,8 @@ module com.bts.personalbudgetdesktop {
     requires jakarta.cdi;
     requires jakarta.inject;
     requires weld.se.core;
+    requires org.mapstruct;
+    requires org.mapstruct.processor;
 
     opens com.bts.personalbudgetdesktop to javafx.fxml;
     opens com.bts.personalbudgetdesktop.controller to javafx.fxml, weld.core.impl;
@@ -24,7 +24,9 @@ module com.bts.personalbudgetdesktop {
     exports com.bts.personalbudgetdesktop.model;
     exports com.bts.personalbudgetdesktop.view;
     exports com.bts.personalbudgetdesktop.controller.fixedbill;
+    exports com.bts.personalbudgetdesktop.mapper to org.mapstruct;
     opens com.bts.personalbudgetdesktop.controller.fixedbill to javafx.fxml, weld.core.impl;
     exports com.bts.personalbudgetdesktop.controller.dashboard;
     opens com.bts.personalbudgetdesktop.controller.dashboard to javafx.fxml, weld.core.impl;
+    exports com.bts.personalbudgetdesktop.model.recurrence;
 }

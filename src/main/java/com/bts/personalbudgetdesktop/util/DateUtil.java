@@ -2,6 +2,7 @@ package com.bts.personalbudgetdesktop.util;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.Optional;
@@ -19,12 +20,19 @@ public class DateUtil {
         return Optional.of(DATE_FORMATTER.format(date));
     }
 
-    public static String buildWeeklyDayName(final Integer day) {
-        return DayOfWeek.of(day).minus(1).getDisplayName(TextStyle.SHORT_STANDALONE, IN_LOCALE);
-    }
-
     public static String buildDateFormat(final LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern(SHORT_DATE_FORMATTER));
+    }
+
+    public int convertDateToDayOfYear(final String date) {
+        String[] parts = date.split("/");
+        if (parts.length != 2) throw new IllegalArgumentException("Formato inválido (DD/MM esperado)");
+
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+
+        LocalDate localDate = LocalDate.of(Year.now().getValue(), month, day);
+        return localDate.getDayOfYear();
     }
 
 }
