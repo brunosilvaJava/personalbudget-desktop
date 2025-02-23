@@ -1,4 +1,4 @@
-package com.bts.personalbudgetdesktop.model;
+package com.bts.personalbudgetdesktop.model.recurrence;
 
 public enum RecurrenceType {
     WEEKLY,

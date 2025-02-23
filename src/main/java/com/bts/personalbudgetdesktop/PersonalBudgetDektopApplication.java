@@ -16,6 +16,7 @@ public class PersonalBudgetDektopApplication extends Application {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/global.css")).toExternalForm());
         stage.setTitle("Orçamento Financeiro Pessoal");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
     }
 

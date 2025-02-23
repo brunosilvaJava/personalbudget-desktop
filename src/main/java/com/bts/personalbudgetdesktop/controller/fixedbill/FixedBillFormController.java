@@ -1,28 +1,28 @@
 package com.bts.personalbudgetdesktop.controller.fixedbill;
 
-import com.bts.personalbudgetdesktop.model.FixedBill;
-import com.bts.personalbudgetdesktop.model.OperationType;
-import com.bts.personalbudgetdesktop.model.RecurrenceType;
+import com.bts.personalbudgetdesktop.exception.ValidationException;
+import com.bts.personalbudgetdesktop.model.FixedBillDTO;
+import com.bts.personalbudgetdesktop.model.recurrence.RecurrenceType;
 import com.bts.personalbudgetdesktop.service.FixedBillService;
 import com.bts.personalbudgetdesktop.view.FixedBillView;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Year;
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.UUID;
 import java.util.stream.IntStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class FixedBillFormController
         extends FixedBillFormFieldsController
         implements FixedBillFormActionsController {
 
-    protected final FixedBillService fixedBillService;
-    protected final ObservableList<FixedBillView> fixedBillViewList;
+    private final FixedBillService fixedBillService;
+    private final ObservableList<FixedBillView> fixedBillViewList;
+
+    private static final int FIRST_DAY_OF_MONTH = 1;
+    private static final int LAST_DAY_OF_MONTH = 31;
 
     public FixedBillFormController() {
         fixedBillService = new FixedBillService();
@@ -31,53 +31,64 @@ public class FixedBillFormController
 
     @Override
     public void initialize() {
-        monthlyDayComboBox.getItems().addAll(IntStream.rangeClosed(1, 31).boxed().toList());
+        monthlyDayComboBox.getItems()
+                .addAll(IntStream.rangeClosed(FIRST_DAY_OF_MONTH, LAST_DAY_OF_MONTH).boxed().toList());
         configureRecurrenceTypeGroup();
         configureOperationTypeGroup();
         configureTable();
         loadFixedBills();
     }
 
-    protected void loadFixedBills() {
-        final List<FixedBillView> fixedBillViews = fixedBillService.findAllFixedBills()
-                .stream()
-                .map(FixedBillView::new)
-                .toList();
-        fixedBillViewList.setAll(fixedBillViews);
+    @Override
+    public Set<FixedBillDTO> findAll() {
+        return fixedBillService.findAll();
     }
 
     @Override
-    protected void editarRegistro(FixedBillView fixedBillView) {
-        System.out.println("Editando: " + fixedBillView.getDescriptionProperty().get());
+    public void actionEditButton(final FixedBillView fixedBillView) {
+        final UUID code = UUID.fromString(fixedBillView.getCodeProperty().getValue());
+        final FixedBillDTO fixedBillDTO = fixedBillService.findByCode(code).orElseThrow();
+        setFieldsValues(fixedBillDTO);
     }
 
     @Override
-    public void updateVisibleRecurrenceTypePane() {
-        weeklyDaysPane.setVisible(weeklyRadio.isSelected());
-        monthlyDaysPane.setVisible(monthlyRadio.isSelected());
-        yearlyDaysPane.setVisible(yearlyRadio.isSelected());
-    }
-
-    @Override
-    public void cleanForm() {
-        cleanFormFields();
-    }
-
-    @Override
-    public void handleSubmit() {
-        final FixedBill newBill = buildFixedBill();
-        fixedBillService.save(newBill);
+    public void actionDeleteButton(final UUID fixedBillCode) {
+        fixedBillService.delete(fixedBillCode);
         loadFixedBills();
-        updateVisibleRecurrenceTypePane();
-        cleanForm();
     }
 
-    protected FixedBill buildFixedBill() {
+    @Override
+    public void actionSaveButton() {
+        try {
+            final FixedBillDTO newBill = buildFixedBill();
+            fixedBillService.validateFields(newBill);
+            if (newBill.code() != null) {
+                final Alert confirmSaveAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmSaveAlert.setTitle("Confirmação de Edição");
+                confirmSaveAlert.setHeaderText("Confirmação de Edição");
+                confirmSaveAlert.setContentText(String.format("Deseja realmente editar a conta fixa: '%s'?", newBill.description()));
+                final Optional<ButtonType> result = confirmSaveAlert.showAndWait();
+                if (result.isEmpty() || result.get() != ButtonType.OK) {
+                    return;
+                }
+            }
+            fixedBillService.save(newBill);
+            loadFixedBills();
+            updateVisibleRecurrenceTypePane();
+            cleanForm(false);
+
+        } catch (ValidationException e) {
+            showValidationErrors(e.getErrors());
+        }
+    }
+
+    protected FixedBillDTO buildFixedBill() {
         final RecurrenceType recurrenceType = findRecurrenceType();
-        return new FixedBill(
+        return new FixedBillDTO(
+                codeField.getText(),
                 findOperationType(),
                 descriptionField.getText(),
-                new BigDecimal(amountField.getText()),
+                amountField.getText(),
                 recurrenceType,
                 findDaysByRecurrenceType(recurrenceType),
                 startDatePicker.getValue(),
@@ -86,44 +97,28 @@ public class FixedBillFormController
         );
     }
 
-    protected OperationType findOperationType() {
-        return creditRadio.isSelected() ? OperationType.CREDIT : OperationType.DEBIT;
+    @Override
+    public void updateVisibleRecurrenceTypePane() {
+        super.updateVisibleRecurrenceTypePane();
     }
 
-    protected RecurrenceType findRecurrenceType() {
-        final String recurrenceTypeValue = (String) recurrenceTypeHBox.getChildren()
-                .stream()
-                .filter(node -> node instanceof RadioButton)
-                .map(node -> (RadioButton) node)
-                .filter(RadioButton::isSelected)
-                .findFirst()
-                .get()
-                .getUserData();
-        return RecurrenceType.valueOf(recurrenceTypeValue);
+    @Override
+    public void cleanForm() {
+        cleanForm(true);
     }
 
-    protected Set<Integer> findDaysByRecurrenceType(RecurrenceType recurrenceType) {
-        return switch (recurrenceType) {
-            case WEEKLY -> weeklyDaysPane.getChildren().stream()
-                    .filter(node -> node instanceof CheckBox)
-                    .map(node -> (CheckBox) node)
-                    .filter(CheckBox::isSelected)
-                    .map(weekDayCheckbox -> Integer.valueOf((String) weekDayCheckbox.getUserData()))
-                    .collect(Collectors.toSet());
-            case MONTHLY -> Set.of(monthlyDayComboBox.getValue());
-            case YEARLY -> Set.of(convertDateToDayOfYear(yearlyDayField.getText()));
-        };
-    }
-
-    protected int convertDateToDayOfYear(String date) {
-        String[] parts = date.split("/");
-        if (parts.length != 2) throw new IllegalArgumentException("Formato inválido (DD/MM esperado)");
-
-        int day = Integer.parseInt(parts[0]);
-        int month = Integer.parseInt(parts[1]);
-
-        LocalDate localDate = LocalDate.of(Year.now().getValue(), month, day);
-        return localDate.getDayOfYear();
+    private void cleanForm(boolean confirmation) {
+        if (confirmation) {
+            final Alert confirmCleanAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmCleanAlert.setTitle("Confirmação de Limpeza");
+            confirmCleanAlert.setHeaderText("Confirmação de Limpeza");
+            confirmCleanAlert.setContentText("Deseja realmente limpar o formulário?");
+            final Optional<ButtonType> result = confirmCleanAlert.showAndWait();
+            if (result.isEmpty() || result.get() != ButtonType.OK) {
+                return;
+            }
+        }
+        cleanFormFields();
     }
 
     @Override
