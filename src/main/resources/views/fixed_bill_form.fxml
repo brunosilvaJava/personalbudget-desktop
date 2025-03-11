@@ -17,7 +17,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" spacing="10" fillWidth="true" fx:controller="com.bts.personalbudgetdesktop.controller.fixedbill.FixedBillFormController">
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" spacing="10" fillWidth="true"
+      fx:controller="com.bts.personalbudgetdesktop.controller.fixedbill.FixedBillFormController">
     <padding>
         <Insets bottom="15" left="15" right="15" top="15" />
     </padding>

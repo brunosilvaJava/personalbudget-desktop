@@ -29,4 +29,7 @@ module com.bts.personalbudgetdesktop {
     exports com.bts.personalbudgetdesktop.controller.dashboard;
     opens com.bts.personalbudgetdesktop.controller.dashboard to javafx.fxml, weld.core.impl;
     exports com.bts.personalbudgetdesktop.model.recurrence;
+    exports com.bts.personalbudgetdesktop.controller.installmentbill;
+    opens com.bts.personalbudgetdesktop.controller.installmentbill to javafx.fxml, weld.core.impl;
+    opens com.bts.personalbudgetdesktop.model to javafx.fxml, weld.core.impl;
 }

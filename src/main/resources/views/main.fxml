@@ -20,12 +20,13 @@
             </Menu>
             <Menu text="Orçamento">
                 <MenuItem onAction="#showFixedBill" text="Gerenciar Contas Fixas" />
+                <MenuItem onAction="#showInstallmentBill" text="Gerenciar Contas Parceladas" />
             </Menu>
         </MenuBar>
     </top>
 
     <center>
-        <fx:include source="fixed_bill_form.fxml" />
+        <fx:include source="installment_bill_form.fxml" />
     </center>
 
     <bottom>
