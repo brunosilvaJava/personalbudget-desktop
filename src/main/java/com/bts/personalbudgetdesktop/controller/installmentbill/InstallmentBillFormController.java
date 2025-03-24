@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.mapstruct.ap.internal.util.Strings;
 
 public class InstallmentBillFormController
         extends InstallmentBillFormFieldsController
@@ -44,6 +45,7 @@ public class InstallmentBillFormController
             };
             installmentBillStatusComboBox.getItems().add(statusValue);
         }
+        installmentBillStatusComboBox.setValue("Pendente");
     }
 
     @Override
@@ -93,10 +95,10 @@ public class InstallmentBillFormController
                 findCode(),
                 findOperationType(),
                 descriptionField.getText(),
-                new BigDecimal(amountField.getText()),
+                Strings.isNotEmpty(amountField.getText()) ? new BigDecimal(amountField.getText()) : null,
                 findStatus(),
                 purchaseDatePicker.getValue(),
-                Integer.parseInt(installmentCount.getText()),
+                Strings.isNotEmpty(installmentCount.getText()) ? Integer.parseInt(installmentCount.getText()) : null,
                 activeRadio.isSelected()
         );
     }

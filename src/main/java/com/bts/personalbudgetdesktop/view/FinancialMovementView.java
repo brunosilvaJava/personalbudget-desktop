@@ -1,12 +1,11 @@
 package com.bts.personalbudgetdesktop.view;
 
-import com.bts.personalbudgetdesktop.exception.ValidationException;
-import com.bts.personalbudgetdesktop.model.InstallmentBillDTO;
-import com.bts.personalbudgetdesktop.model.InstallmentBillStatus;
+import com.bts.personalbudgetdesktop.model.FinancialMovementStatus;
 import com.bts.personalbudgetdesktop.model.OperationType;
 import com.bts.personalbudgetdesktop.util.DateUtil;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 import javafx.beans.property.BooleanProperty;
@@ -16,36 +15,42 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class InstallmentBillView {
+public class FinancialMovementView {
 
     private final StringProperty code;
     private final StringProperty description;
     private final StringProperty amount;
+    private final StringProperty amountPaid;
     private final StringProperty operationType;
     private final StringProperty status;
-    private final StringProperty purchaseDate;
-    private final StringProperty installmentCount;
+    private final StringProperty movementDate;
+    private final StringProperty dueDate;
+    private final StringProperty payDate;
     private final SimpleObjectProperty<Boolean> active;
 
     private final BooleanProperty buttonsDisabled;
 
-    public InstallmentBillView(
+    public FinancialMovementView(
             final UUID code,
             final OperationType operationType,
             final String description,
             final BigDecimal amount,
-            final InstallmentBillStatus status,
-            final LocalDate purchaseDate,
-            final Integer installmentCount,
+            final BigDecimal amountPaid,
+            final FinancialMovementStatus status,
+            final LocalDate movementDate,
+            final LocalDate dueDate,
+            final LocalDate payDate,
             final Boolean active
     ) {
         this.code = new SimpleStringProperty(code.toString());
+        this.operationType = new SimpleStringProperty(buildOperationTypeNameValue(operationType));
         this.description = new SimpleStringProperty(description);
         this.amount = new SimpleStringProperty(amount.toString());
-        this.operationType = new SimpleStringProperty(buildOperationTypeNameValue(operationType));
+        this.amountPaid = new SimpleStringProperty(amountPaid.toString());
         this.status = new SimpleStringProperty(buildStatusValue(status));
-        this.purchaseDate = new SimpleStringProperty(formatDate(purchaseDate));
-        this.installmentCount = new SimpleStringProperty(installmentCount.toString());
+        this.movementDate = new SimpleStringProperty(formatDate(movementDate));
+        this.dueDate = new SimpleStringProperty(formatDate(dueDate));
+        this.payDate = new SimpleStringProperty(formatDate(payDate));
         this.active = new SimpleObjectProperty<>(active);
         buttonsDisabled = new SimpleBooleanProperty(false);
     }
@@ -65,10 +70,11 @@ public class InstallmentBillView {
         };
     }
 
-    public static String buildStatusValue(final InstallmentBillStatus status) {
+    public static String buildStatusValue(final FinancialMovementStatus status) {
         return switch (status) {
             case PENDING -> "Pendente";
-            case DONE -> "Pago";
+            case PAID_OUT -> "Pago";
+            case LATE -> "Atrasado";
         };
     }
 
@@ -88,6 +94,10 @@ public class InstallmentBillView {
         return amount;
     }
 
+    public StringProperty getAmountPaidProperty() {
+        return amountPaid;
+    }
+
     public StringProperty getOperationTypeProperty() {
         return operationType;
     }
@@ -96,12 +106,16 @@ public class InstallmentBillView {
         return status;
     }
 
-    public StringProperty getPurchaseDateProperty() {
-        return purchaseDate;
+    public StringProperty getMovementDateProperty() {
+        return movementDate;
     }
 
-    public StringProperty getInstallmentCountProperty() {
-        return installmentCount;
+    public StringProperty getDueDateProperty() {
+        return dueDate;
+    }
+
+    public StringProperty getPayDateProperty() {
+        return payDate;
     }
 
     public ObjectProperty<Boolean> getActiveProperty() {
@@ -112,7 +126,7 @@ public class InstallmentBillView {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        InstallmentBillView that = (InstallmentBillView) o;
+        FinancialMovementView that = (FinancialMovementView) o;
         return Objects.equals(code, that.code);
     }
 
@@ -121,4 +135,3 @@ public class InstallmentBillView {
         return Objects.hashCode(code);
     }
 }
-

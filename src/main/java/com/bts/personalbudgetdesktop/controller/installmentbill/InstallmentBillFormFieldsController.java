@@ -184,6 +184,7 @@ public abstract class InstallmentBillFormFieldsController {
         codeField.setText(null);
         descriptionField.clear();
         amountField.clear();
+        installmentBillStatusComboBox.setValue("Pendente");
         installmentCount.clear();
         purchaseDatePicker.setValue(null);
         activeRadio.setSelected(true);
@@ -208,9 +209,19 @@ public abstract class InstallmentBillFormFieldsController {
 
     protected void showValidationErrors(Map<String, String> errors) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+
         alert.setTitle("Campos inválidos");
         alert.setHeaderText("Por favor, corrija os campos inválidos:");
         alert.setContentText(String.join("\n", errors.values()));
+
+        if (errors.containsKey("description")) {
+            descriptionField.setStyle("-fx-border-color: red;");
+        }
+
+        if (errors.containsKey("status")) {
+            installmentBillStatusComboBox.setStyle("-fx-border-color: red;");
+        }
+
         alert.show();
     }
 }

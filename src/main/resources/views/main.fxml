@@ -21,6 +21,7 @@
             <Menu text="Orçamento">
                 <MenuItem onAction="#showFixedBill" text="Gerenciar Contas Fixas" />
                 <MenuItem onAction="#showInstallmentBill" text="Gerenciar Contas Parceladas" />
+                <MenuItem onAction="#showFinancialMovement" text="Gerenciar Contas Avulsas" />
             </Menu>
         </MenuBar>
     </top>

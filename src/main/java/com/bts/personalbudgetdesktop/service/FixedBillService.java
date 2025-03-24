@@ -70,6 +70,9 @@ public class FixedBillService {
         if (fixedBillDTO.days() == null || fixedBillDTO.days().isEmpty()) {
             errors.put("days", "Os dias são obrigatórios.");
         }
+        if (fixedBillDTO.startDate().getDayOfYear() > fixedBillDTO.endDate().getDayOfYear()) {
+            errors.put("startDate", "A data inicial não pode ser maior que a data final");
+        }
 
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);

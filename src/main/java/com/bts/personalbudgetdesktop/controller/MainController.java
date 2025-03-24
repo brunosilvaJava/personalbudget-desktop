@@ -38,11 +38,16 @@ public class MainController {
         loadView("/views/installment_bill_form.fxml");
     }
 
+    @FXML
+    public void showFinancialMovement() {
+        loadView("/views/financial_movement_form.fxml");
+    }
+
     public void loadView(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
             Parent view = loader.load();
-            // Adiciona efeito de transição
+
             FadeTransition ft = new FadeTransition(Duration.millis(500), view);
             ft.setFromValue(0);
             ft.setToValue(1);
