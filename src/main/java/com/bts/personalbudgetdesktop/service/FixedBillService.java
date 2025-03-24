@@ -1,54 +1,41 @@
 package com.bts.personalbudgetdesktop.service;
 
+import com.bts.personalbudgetdesktop.client.personalbudgetapi.PersonalBudgetApiClient;
 import com.bts.personalbudgetdesktop.exception.ValidationException;
 import com.bts.personalbudgetdesktop.mapper.FixedBillMapper;
 import com.bts.personalbudgetdesktop.model.FixedBill;
 import com.bts.personalbudgetdesktop.model.FixedBillDTO;
-import com.bts.personalbudgetdesktop.model.OperationType;
-import com.bts.personalbudgetdesktop.model.recurrence.MonthlyRecurrence;
-import com.bts.personalbudgetdesktop.model.recurrence.YearlyRecurrence;
-import java.math.BigDecimal;
-import java.time.MonthDay;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 public class FixedBillService {
 
-    private final Set<FixedBill> fixedBillList;
+    private final PersonalBudgetApiClient personalBudgetApiClient;
     private final FixedBillMapper fixedBillMapper;
 
     public FixedBillService() {
-        fixedBillList = new HashSet<>();
-        fixedBillList.add(new FixedBill(OperationType.CREDIT, "Salário", BigDecimal.valueOf(10000), new MonthlyRecurrence(1)));
-        fixedBillList.add(new FixedBill(OperationType.DEBIT, "Presente", BigDecimal.valueOf(850), new YearlyRecurrence(MonthDay.of(12, 24))));
+        personalBudgetApiClient = new PersonalBudgetApiClient();
         fixedBillMapper = FixedBillMapper.INSTANCE;
     }
 
     public void save(final FixedBillDTO fixedBillDTO) {
-
         FixedBill fixedBill = fixedBillMapper.dtoToModel(fixedBillDTO);
-
-        fixedBillList.remove(fixedBill);
-        fixedBillList.add(fixedBill);
+        personalBudgetApiClient.saveFixedBill(fixedBill);
     }
 
     public void delete(final UUID fixedBillCode) {
-        fixedBillList.removeIf(fixedBill -> fixedBill.code().equals(fixedBillCode));
+        personalBudgetApiClient.delete(fixedBillCode);
     }
 
-    public Optional<FixedBillDTO> findByCode(final UUID code) {
-        return fixedBillList.stream()
-                .filter(fixedBillDTO -> fixedBillDTO.code().equals(code))
-                .map(fixedBillMapper::modelToDto)
-                .findFirst();
+    public FixedBillDTO findByCode(final UUID code) {
+        FixedBill fixedBill = personalBudgetApiClient.find(code).orElseThrow();
+        return fixedBillMapper.modelToDto(fixedBill);
     }
 
-    public Set<FixedBillDTO> findAll() {
-        return fixedBillMapper.modelListToDtoList(fixedBillList);
+    public List<FixedBillDTO> findAll() {
+        return fixedBillMapper.modelListToDtoList(personalBudgetApiClient.findFixedBills());
     }
 
     public void validateFields(FixedBillDTO fixedBillDTO) {

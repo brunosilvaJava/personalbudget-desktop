@@ -5,8 +5,8 @@ import com.bts.personalbudgetdesktop.model.FixedBillDTO;
 import com.bts.personalbudgetdesktop.model.recurrence.RecurrenceType;
 import com.bts.personalbudgetdesktop.service.FixedBillService;
 import com.bts.personalbudgetdesktop.view.FixedBillView;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.IntStream;
 import javafx.collections.FXCollections;
@@ -40,14 +40,14 @@ public class FixedBillFormController
     }
 
     @Override
-    public Set<FixedBillDTO> findAll() {
+    public List<FixedBillDTO> findAll() {
         return fixedBillService.findAll();
     }
 
     @Override
     public void actionEditButton(final FixedBillView fixedBillView) {
         final UUID code = UUID.fromString(fixedBillView.getCodeProperty().getValue());
-        final FixedBillDTO fixedBillDTO = fixedBillService.findByCode(code).orElseThrow();
+        final FixedBillDTO fixedBillDTO = fixedBillService.findByCode(code);
         setFieldsValues(fixedBillDTO);
     }
 

@@ -13,6 +13,9 @@ module com.bts.personalbudgetdesktop {
     requires weld.se.core;
     requires org.mapstruct;
     requires org.mapstruct.processor;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
     opens com.bts.personalbudgetdesktop to javafx.fxml;
     opens com.bts.personalbudgetdesktop.controller to javafx.fxml, weld.core.impl;
@@ -24,6 +27,7 @@ module com.bts.personalbudgetdesktop {
     exports com.bts.personalbudgetdesktop.model;
     exports com.bts.personalbudgetdesktop.view;
     exports com.bts.personalbudgetdesktop.controller.fixedbill;
+    exports com.bts.personalbudgetdesktop.client.personalbudgetapi;
     exports com.bts.personalbudgetdesktop.mapper to org.mapstruct;
     opens com.bts.personalbudgetdesktop.controller.fixedbill to javafx.fxml, weld.core.impl;
     exports com.bts.personalbudgetdesktop.controller.dashboard;

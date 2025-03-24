@@ -98,7 +98,7 @@ public abstract class FixedBillFormFieldsController {
 
     protected abstract ObservableList<FixedBillView> findFixedBillViews();
 
-    protected abstract Set<FixedBillDTO> findAll();
+    protected abstract List<FixedBillDTO> findAll();
 
     protected abstract void actionEditButton(FixedBillView fixedBillView);
 
