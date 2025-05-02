@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" spacing="10" fillWidth="true"
+      fx:controller="com.bts.personalbudgetdesktop.controller.financialmovement.FinancialMovementFormController">
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15" />
+    </padding>
+    <GridPane hgap="10" vgap="10">
+        <Label fx:id="codeField" visible="false" GridPane.columnIndex="1" />
+
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Cadastrar Conta Avulsa" />
+
+        <Label text="Tipo de Operação" GridPane.rowIndex="2" />
+        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <RadioButton fx:id="debitRadio" selected="true" text="Débito" />
+            <RadioButton fx:id="creditRadio" text="Crédito" />
+        </HBox>
+
+        <Label text="Descrição:" GridPane.rowIndex="3" />
+        <TextField fx:id="descriptionField" promptText="Digite a descrição" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+        <Label text="Valor (R$):" GridPane.rowIndex="4" />
+        <TextField fx:id="amountField" promptText="Ex: 1000" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+        <Label text="Valor Pago (R$):" GridPane.rowIndex="5" />
+        <TextField fx:id="amountPaidField" promptText="Ex: 500" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+        <Label text="Status do Movimento:" GridPane.rowIndex="6" />
+        <ComboBox fx:id="financialMovementStatusComboBox" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+        <Label text="Data de Movimentação:" GridPane.rowIndex="7" />
+        <DatePicker fx:id="movementDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+        <Label text="Data de Vencimento:" GridPane.rowIndex="8" />
+        <DatePicker fx:id="dueDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+        <Label text="Data de Pagamento:" GridPane.rowIndex="9" />
+        <DatePicker fx:id="payDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+
+        <Label text="Ativo:" GridPane.rowIndex="10" />
+        <RadioButton fx:id="activeRadio" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+
+        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="11">
+            <Button onAction="#cleanForm" text="Limpar" />
+            <Button onAction="#actionSaveButton" text="Salvar" />
+        </HBox>
+    </GridPane>
+
+    <TableView fx:id="financialMovementTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="codeColumn" text="Código" visible="false" />
+            <TableColumn fx:id="operationTypeColumn" text="Tipo de Operação" prefWidth="150.0" />
+            <TableColumn fx:id="descriptionColumn" text="Descrição" prefWidth="220.0" />
+            <TableColumn fx:id="amountColumn" text="Valor (R$)" prefWidth="150.0" />
+            <TableColumn fx:id="amountPaidColumn" text="Valor Pago (R$)" prefWidth="150.0" />
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="120.0" />
+            <TableColumn fx:id="movementDateColumn" text="Data da Movimentação" prefWidth="120.0" />
+            <TableColumn fx:id="dueDateColumn" text="Data de Vencimento" prefWidth="120.0" />
+            <TableColumn fx:id="payDateColumn" text="Data de Pagamento" prefWidth="120.0" />
+            <TableColumn fx:id="activeColumn" text="Ativo" prefWidth="60.0" resizable="false" />
+        </columns>
+    </TableView>
+</VBox>

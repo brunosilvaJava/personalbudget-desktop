@@ -26,11 +26,11 @@ public class FixedBillService {
     }
 
     public void delete(final UUID fixedBillCode) {
-        personalBudgetApiClient.delete(fixedBillCode);
+        personalBudgetApiClient.deleteFixedBill(fixedBillCode);
     }
 
     public FixedBillDTO findByCode(final UUID code) {
-        FixedBill fixedBill = personalBudgetApiClient.find(code).orElseThrow();
+        FixedBill fixedBill = personalBudgetApiClient.findFixedBill(code).orElseThrow();
         return fixedBillMapper.modelToDto(fixedBill);
     }
 

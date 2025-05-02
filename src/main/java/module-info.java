@@ -27,9 +27,13 @@ module com.bts.personalbudgetdesktop {
     exports com.bts.personalbudgetdesktop.model;
     exports com.bts.personalbudgetdesktop.view;
     exports com.bts.personalbudgetdesktop.controller.fixedbill;
+    exports com.bts.personalbudgetdesktop.controller.installmentbill;
+    exports com.bts.personalbudgetdesktop.controller.financialmovement;
     exports com.bts.personalbudgetdesktop.client.personalbudgetapi;
     exports com.bts.personalbudgetdesktop.mapper to org.mapstruct;
     opens com.bts.personalbudgetdesktop.controller.fixedbill to javafx.fxml, weld.core.impl;
+    opens com.bts.personalbudgetdesktop.controller.installmentbill to javafx.fxml, weld.core.impl;
+    opens com.bts.personalbudgetdesktop.controller.financialmovement to javafx.fxml, weld.core.impl;
     exports com.bts.personalbudgetdesktop.controller.dashboard;
     opens com.bts.personalbudgetdesktop.controller.dashboard to javafx.fxml, weld.core.impl;
     exports com.bts.personalbudgetdesktop.model.recurrence;

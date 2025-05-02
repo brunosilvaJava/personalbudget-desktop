@@ -33,6 +33,16 @@ public class MainController {
         loadView("/views/fixed_bill_form.fxml");
     }
 
+    @FXML
+    public void showInstallmentBill() {
+        loadView("/views/installment_bill_form.fxml");
+    }
+
+    @FXML
+    public void showFinancialMovement() {
+        loadView("/views/financial_movement_form.fxml");
+    }
+
     public void loadView(String fxml) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));

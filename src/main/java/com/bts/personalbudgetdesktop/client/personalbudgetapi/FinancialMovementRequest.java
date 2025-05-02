@@ -1,0 +1,26 @@
+package com.bts.personalbudgetdesktop.client.personalbudgetapi;
+
+import com.bts.personalbudgetdesktop.model.FinancialMovementStatus;
+import com.bts.personalbudgetdesktop.model.OperationType;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+public record FinancialMovementRequest(
+        @JsonProperty("operation_type")
+        OperationType operationType,
+        String description,
+        BigDecimal amount,
+        @JsonProperty("amount_paid")
+        BigDecimal amountPaid,
+        @JsonProperty("movement_date")
+        LocalDateTime movementDate,
+        @JsonProperty("due_date")
+        LocalDateTime dueDate,
+        @JsonProperty("pay_date")
+        LocalDateTime payDate,
+        FinancialMovementStatus status,
+        @JsonProperty("flag_active")
+        Boolean flagActive) {
+
+}

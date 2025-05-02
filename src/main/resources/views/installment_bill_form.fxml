@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" spacing="10" fillWidth="true"
+      fx:controller="com.bts.personalbudgetdesktop.controller.installmentbill.InstallmentBillFormController">
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15" />
+    </padding>
+    <GridPane hgap="10" vgap="10">
+        <Label fx:id="codeField" visible="false" GridPane.columnIndex="1" />
+
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Cadastrar Conta Parcelada" />
+
+        <Label text="Tipo de Operação" GridPane.rowIndex="2" />
+        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <RadioButton fx:id="debitRadio" selected="true" text="Saída" />
+            <RadioButton fx:id="creditRadio" text="Entrada" />
+        </HBox>
+
+        <Label text="Descrição:" GridPane.rowIndex="3" />
+        <TextField fx:id="descriptionField" promptText="Digite a descrição" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+        <Label text="Valor (R$):" GridPane.rowIndex="4" />
+        <TextField fx:id="amountField" promptText="Ex: 1000" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+        <!--mapear com o fxml-->
+        <Label text="Status da Conta Parcelada:" GridPane.rowIndex="5" />
+        <ComboBox fx:id="installmentBillStatusComboBox" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+        <Label text="Data da Compra:" GridPane.rowIndex="6" />
+        <DatePicker fx:id="purchaseDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+        <Label text="Quantidade de Parcelas:" GridPane.rowIndex="7" />
+        <TextField fx:id="installmentCount" promptText="Ex: 12" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+        <Label text="Ativo:" GridPane.rowIndex="8" />
+        <RadioButton fx:id="activeRadio" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+        <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <Button onAction="#cleanForm" text="Limpar" />
+            <Button onAction="#actionSaveButton" text="Salvar" />
+        </HBox>
+    </GridPane>
+
+    <TableView fx:id="installmentBillTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="codeColumn" text="Código" visible="false" />
+            <TableColumn fx:id="operationTypeColumn" text="Tipo de Operação" prefWidth="150.0" />
+            <TableColumn fx:id="descriptionColumn" text="Descrição" prefWidth="220.0" />
+            <TableColumn fx:id="amountColumn" text="Valor (R$)" prefWidth="150.0" />
+            <TableColumn fx:id="statusColumn" text="Status" prefWidth="120.0" />
+            <TableColumn fx:id="purchaseDateColumn" text="Data da Compra" prefWidth="110.0" resizable="false" />
+            <TableColumn fx:id="installmentCountColumn" text="Parcelas" prefWidth="100.0" />
+            <TableColumn fx:id="activeColumn" text="Ativo" prefWidth="60.0" resizable="false" />
+        </columns>
+    </TableView>
+</VBox>

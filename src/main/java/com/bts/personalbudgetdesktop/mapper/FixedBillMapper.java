@@ -41,6 +41,7 @@ public interface FixedBillMapper {
     @Mapping(target = "recurrence", expression = "java(mapRecurrenceByInt(fixedBillResponse.recurrenceType(), fixedBillResponse.days()))")
     @Mapping(target = "active", expression = "java(mapStatus(fixedBillResponse.status()))")
     FixedBill toModel(FixedBillResponse fixedBillResponse);
+
     List<FixedBill> responseToModelList(List<FixedBillResponse> fixedBillResponseList);
 
     @Mapping(target = "flgLeapYear", expression = "java(true)") // TODO: implement logic
