@@ -25,7 +25,6 @@ public class FinancialMovementView {
     private final StringProperty movementDate;
     private final StringProperty dueDate;
     private final StringProperty payDate;
-    private final SimpleObjectProperty<Boolean> active;
 
     private final BooleanProperty buttonsDisabled;
 
@@ -38,8 +37,7 @@ public class FinancialMovementView {
             final FinancialMovementStatus status,
             final LocalDate movementDate,
             final LocalDate dueDate,
-            final LocalDate payDate,
-            final Boolean active
+            final LocalDate payDate
     ) {
         this.code = new SimpleStringProperty(code.toString());
         this.operationType = new SimpleStringProperty(buildOperationTypeNameValue(operationType));
@@ -50,7 +48,6 @@ public class FinancialMovementView {
         this.movementDate = new SimpleStringProperty(formatDate(movementDate));
         this.dueDate = new SimpleStringProperty(formatDate(dueDate));
         this.payDate = new SimpleStringProperty(formatDate(payDate));
-        this.active = new SimpleObjectProperty<>(active);
         buttonsDisabled = new SimpleBooleanProperty(false);
     }
 
@@ -115,10 +112,6 @@ public class FinancialMovementView {
 
     public StringProperty getPayDateProperty() {
         return payDate;
-    }
-
-    public ObjectProperty<Boolean> getActiveProperty() {
-        return active;
     }
 
     @Override

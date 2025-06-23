@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -267,10 +268,35 @@ public class PersonalBudgetApiClient {
         }
     }
 
-    public List<FinancialMovement> findFinancialMovements() {
+    public List<FinancialMovement> findFinancialMovements(LocalDate startDate,
+                                                          LocalDate endDate,
+                                                          List<String> status,
+                                                          String operationType,
+                                                          String description) {
         HttpURLConnection connection = null;
         try {
-            URL url = new URL(API_URL_FM);
+            StringBuilder urlBuilder = new StringBuilder(API_URL_FM + "?");
+            if (startDate != null) {
+                urlBuilder.append("start_date=").append(startDate).append("&");
+            }
+            if (endDate != null) {
+                urlBuilder.append("end_date=").append(endDate).append("&");
+            }
+            if (status != null && !status.isEmpty()) {
+                String statusParam = String.join(",", status);
+                urlBuilder.append("status=").append(java.net.URLEncoder.encode(statusParam, java.nio.charset.StandardCharsets.UTF_8)).append("&");
+            }
+            if (operationType != null && !operationType.isEmpty()) {
+                urlBuilder.append("operation_type=").append(operationType).append("&");
+            }
+            if (description != null && !description.isEmpty()) {
+                urlBuilder.append("description=").append(java.net.URLEncoder.encode(description, java.nio.charset.StandardCharsets.UTF_8)).append("&");
+            }
+            if (urlBuilder.charAt(urlBuilder.length() - 1) == '&' || urlBuilder.charAt(urlBuilder.length() - 1) == '?') {
+                urlBuilder.deleteCharAt(urlBuilder.length() - 1);
+            }
+
+            URL url = new URL(urlBuilder.toString());
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Accept", "application/json");
@@ -283,7 +309,6 @@ public class PersonalBudgetApiClient {
                 );
                 return financialMovementMapper.responseToModelList(financialMovementResponseList);
             } else {
-                // Lê a resposta de erro (caso o backend envie detalhes úteis)
                 try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()))) {
                     String errorResponse = in.lines().collect(Collectors.joining("\n"));
                     System.err.println("Erro HTTP " + responseCode + ": " + errorResponse);

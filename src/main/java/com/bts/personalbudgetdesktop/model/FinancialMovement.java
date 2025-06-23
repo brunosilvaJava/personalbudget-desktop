@@ -14,20 +14,7 @@ public record FinancialMovement(
         LocalDateTime movementDate,
         LocalDateTime dueDate,
         LocalDateTime payDate,
-        FinancialMovementStatus status,
-        Boolean flagActive) {
-
-    public FinancialMovement(OperationType operationType,
-                             String description,
-                             BigDecimal amount,
-                             LocalDateTime movementDate,
-                             LocalDateTime dueDate,
-                             FinancialMovementStatus status
-
-    ) {
-        this(UUID.randomUUID(), operationType, description, amount, null, movementDate, dueDate, null,
-                status, Boolean.TRUE);
-    }
+        FinancialMovementStatus status) {
 
     @Override
     public boolean equals(Object o) {

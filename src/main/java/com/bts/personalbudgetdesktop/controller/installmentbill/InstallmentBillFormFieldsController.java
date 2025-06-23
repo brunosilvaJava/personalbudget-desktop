@@ -48,9 +48,6 @@ public abstract class InstallmentBillFormFieldsController {
     protected DatePicker purchaseDatePicker;
 
     @FXML
-    public RadioButton activeRadio;
-
-    @FXML
     protected TableView<InstallmentBillView> installmentBillTable;
     @FXML
     protected TableColumn<InstallmentBillView, String> descriptionColumn;
@@ -66,8 +63,6 @@ public abstract class InstallmentBillFormFieldsController {
     protected TableColumn<InstallmentBillView, String> installmentCountColumn;
     @FXML
     protected TableColumn<InstallmentBillView, String> purchaseDateColumn;
-    @FXML
-    protected TableColumn<InstallmentBillView, String> activeColumn;
 
     protected abstract ObservableList<InstallmentBillView> findInstallmentBillViews();
 
@@ -96,17 +91,6 @@ public abstract class InstallmentBillFormFieldsController {
         operationTypeColumn.setCellValueFactory(cellData -> cellData.getValue().getOperationTypeProperty());
         installmentCountColumn.setCellValueFactory(cellData -> cellData.getValue().getInstallmentCountProperty());
         purchaseDateColumn.setCellValueFactory(cellData -> cellData.getValue().getPurchaseDateProperty());
-        activeColumn.setCellValueFactory(cellData -> {
-            if (cellData.getValue() != null && cellData.getValue().getActiveProperty().getValue() != null) {
-                if (cellData.getValue().getActiveProperty().getValue()) {
-                    return new SimpleStringProperty("Ativo");
-                } else {
-                    return new SimpleStringProperty("Inativo");
-                }
-            } else {
-                return new SimpleStringProperty("Inativo");
-            }
-        });
 
         TableColumn<InstallmentBillView, Void> editColumn = buildEditButtonTableColumn();
         TableColumn<InstallmentBillView, Void> deleteColumn = buildDeleteButtonTableColumn();
@@ -178,7 +162,6 @@ public abstract class InstallmentBillFormFieldsController {
         }
         installmentCount.setText(installmentBillDTO.installmentCount().toString());
         purchaseDatePicker.setValue(installmentBillDTO.purchaseDate());
-        activeRadio.setSelected(installmentBillDTO.active());
     }
 
     protected void cleanFormFields() {
@@ -190,7 +173,6 @@ public abstract class InstallmentBillFormFieldsController {
         installmentBillStatusComboBox.setValue("Pendente");
         installmentCount.clear();
         purchaseDatePicker.setValue(null);
-        activeRadio.setSelected(true);
     }
 
     protected void loadInstallmentBills() {
@@ -203,8 +185,7 @@ public abstract class InstallmentBillFormFieldsController {
                         dto.amount(),
                         dto.status(),
                         dto.purchaseDate(),
-                        dto.installmentCount(),
-                        dto.active()
+                        dto.installmentCount()
                 ))
                 .toList();
         findInstallmentBillViews().setAll(installmentBillViews);

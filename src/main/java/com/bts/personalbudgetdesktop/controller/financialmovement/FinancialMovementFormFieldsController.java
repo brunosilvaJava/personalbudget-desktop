@@ -51,9 +51,6 @@ public abstract class FinancialMovementFormFieldsController {
     protected DatePicker payDatePicker;
 
     @FXML
-    public RadioButton activeRadio;
-
-    @FXML
     protected TableView<FinancialMovementView> financialMovementTable;
     @FXML
     protected TableColumn<FinancialMovementView, String> descriptionColumn;
@@ -73,8 +70,6 @@ public abstract class FinancialMovementFormFieldsController {
     protected TableColumn<FinancialMovementView, String> dueDateColumn;
     @FXML
     protected TableColumn<FinancialMovementView, String> payDateColumn;
-    @FXML
-    protected TableColumn<FinancialMovementView, String> activeColumn;
 
     protected abstract ObservableList<FinancialMovementView> findFinancialMovementViews();
 
@@ -104,18 +99,6 @@ public abstract class FinancialMovementFormFieldsController {
         movementDateColumn.setCellValueFactory(cellData -> cellData.getValue().getMovementDateProperty());
         dueDateColumn.setCellValueFactory(cellData -> cellData.getValue().getDueDateProperty());
         payDateColumn.setCellValueFactory(cellData -> cellData.getValue().getPayDateProperty());
-        activeColumn.setCellValueFactory(cellData -> {
-            if (cellData.getValue().getActiveProperty().getValue() == null) {
-                return new SimpleStringProperty("Ativo");
-            } else {
-                if (cellData.getValue().getActiveProperty().getValue()) {
-                    return new SimpleStringProperty("Ativo");
-                } else {
-                    return new SimpleStringProperty("Inativo");
-                }
-            }
-
-        });
 
         TableColumn<FinancialMovementView, Void> editColumn = buildEditButtonTableColumn();
         TableColumn<FinancialMovementView, Void> deleteColumn = buildDeleteButtonTableColumn();
@@ -193,7 +176,6 @@ public abstract class FinancialMovementFormFieldsController {
         movementDatePicker.setValue(financialMovementDTO.movementDate());
         dueDatePicker.setValue(financialMovementDTO.dueDate());
         payDatePicker.setValue(financialMovementDTO.payDate() != null ? financialMovementDTO.payDate() : null);
-        activeRadio.setSelected(financialMovementDTO.flagActive());
     }
 
     protected void cleanFormFields() {
@@ -207,7 +189,6 @@ public abstract class FinancialMovementFormFieldsController {
         movementDatePicker.setValue(null);
         dueDatePicker.setValue(null);
         payDatePicker.setValue(null);
-        activeRadio.setSelected(true);
     }
 
     protected void loadFinancialMovements() {
@@ -222,8 +203,7 @@ public abstract class FinancialMovementFormFieldsController {
                         dto.status(),
                         dto.movementDate(),
                         dto.dueDate(),
-                        dto.payDate(),
-                        dto.flagActive()
+                        dto.payDate()
                 ))
                 .toList();
         findFinancialMovementViews().setAll(financialMovementViews);

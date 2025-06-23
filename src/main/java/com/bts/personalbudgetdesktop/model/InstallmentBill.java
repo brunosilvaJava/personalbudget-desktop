@@ -12,8 +12,7 @@ public record InstallmentBill(
         BigDecimal amount,
         InstallmentBillStatus status,
         LocalDate purchaseDate,
-        Integer installmentCount,
-        Boolean active
+        Integer installmentCount
 ) {
     public InstallmentBill(OperationType operationType,
                            String description,
@@ -22,7 +21,7 @@ public record InstallmentBill(
                            LocalDate purchaseDate,
                            Integer installmentCount
     ) {
-        this(UUID.randomUUID(), operationType, description, amount, status, purchaseDate, installmentCount, Boolean.TRUE);
+        this(UUID.randomUUID(), operationType, description, amount, status, purchaseDate, installmentCount);
     }
 
     @Override

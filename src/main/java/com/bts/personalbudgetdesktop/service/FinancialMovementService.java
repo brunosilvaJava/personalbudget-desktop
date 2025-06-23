@@ -11,6 +11,7 @@ import com.bts.personalbudgetdesktop.model.FixedBill;
 import com.bts.personalbudgetdesktop.model.FixedBillDTO;
 import com.bts.personalbudgetdesktop.model.OperationType;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,8 +45,11 @@ public class FinancialMovementService {
         return financialMovementMapper.modelToDto(financialMovement);
     }
 
-    public List<FinancialMovementDTO> findAll() {
-        return financialMovementMapper.modelListToDtoList(personalBudgetApiClient.findFinancialMovements());
+    public List<FinancialMovementDTO> findAll(LocalDate startDate, LocalDate endDate, List<String> status,
+                                              String operationType, String description) {
+        return financialMovementMapper.modelListToDtoList(
+            personalBudgetApiClient.findFinancialMovements(startDate, endDate, status, operationType, description)
+        );
     }
 
     public void validateFields(FinancialMovementDTO financialMovementDTO) {
@@ -74,9 +78,6 @@ public class FinancialMovementService {
         }
         if (financialMovementDTO.payDate() == null && financialMovementDTO.status() == FinancialMovementStatus.PAID_OUT) {
             errors.put("payDate", "A data de pagamento é obrigatória quando o status é Pago.");
-        }
-        if (financialMovementDTO.flagActive() == null) {
-            errors.put("flagActive", "O status de atividade (ativo/inativo) é obrigatório.");
         }
         if (financialMovementDTO.movementDate() != null && financialMovementDTO.dueDate() != null &&
                 financialMovementDTO.movementDate().getDayOfYear() > financialMovementDTO.dueDate().getDayOfYear()) {

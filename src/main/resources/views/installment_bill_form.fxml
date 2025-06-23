@@ -37,9 +37,6 @@
         <Label text="Quantidade de Parcelas:" GridPane.rowIndex="7" />
         <TextField fx:id="installmentCount" promptText="Ex: 12" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-        <Label text="Ativo:" GridPane.rowIndex="8" />
-        <RadioButton fx:id="activeRadio" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-
         <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="9">
             <Button onAction="#cleanForm" text="Limpar" />
             <Button onAction="#actionSaveButton" text="Salvar" />
@@ -55,7 +52,6 @@
             <TableColumn fx:id="statusColumn" text="Status" prefWidth="120.0" />
             <TableColumn fx:id="purchaseDateColumn" text="Data da Compra" prefWidth="110.0" resizable="false" />
             <TableColumn fx:id="installmentCountColumn" text="Parcelas" prefWidth="100.0" />
-            <TableColumn fx:id="activeColumn" text="Ativo" prefWidth="60.0" resizable="false" />
         </columns>
     </TableView>
 </VBox>

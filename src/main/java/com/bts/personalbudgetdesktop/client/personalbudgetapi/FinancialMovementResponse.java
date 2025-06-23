@@ -2,11 +2,13 @@ package com.bts.personalbudgetdesktop.client.personalbudgetapi;
 
 import com.bts.personalbudgetdesktop.model.FinancialMovementStatus;
 import com.bts.personalbudgetdesktop.model.OperationType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public record FinancialMovementResponse(
         UUID code,
         @JsonProperty("operation_type")

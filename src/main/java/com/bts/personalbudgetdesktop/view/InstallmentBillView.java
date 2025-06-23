@@ -25,7 +25,6 @@ public class InstallmentBillView {
     private final StringProperty status;
     private final StringProperty purchaseDate;
     private final StringProperty installmentCount;
-    private final SimpleObjectProperty<Boolean> active;
 
     private final BooleanProperty buttonsDisabled;
 
@@ -36,8 +35,7 @@ public class InstallmentBillView {
             final BigDecimal amount,
             final InstallmentBillStatus status,
             final LocalDate purchaseDate,
-            final Integer installmentCount,
-            final Boolean active
+            final Integer installmentCount
     ) {
         this.code = new SimpleStringProperty(code.toString());
         this.description = new SimpleStringProperty(description);
@@ -46,7 +44,6 @@ public class InstallmentBillView {
         this.status = new SimpleStringProperty(buildStatusValue(status));
         this.purchaseDate = new SimpleStringProperty(formatDate(purchaseDate));
         this.installmentCount = new SimpleStringProperty(installmentCount.toString());
-        this.active = new SimpleObjectProperty<>(active);
         buttonsDisabled = new SimpleBooleanProperty(false);
     }
 
@@ -102,10 +99,6 @@ public class InstallmentBillView {
 
     public StringProperty getInstallmentCountProperty() {
         return installmentCount;
-    }
-
-    public ObjectProperty<Boolean> getActiveProperty() {
-        return active;
     }
 
     @Override

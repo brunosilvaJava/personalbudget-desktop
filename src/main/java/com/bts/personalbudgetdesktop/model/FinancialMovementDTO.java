@@ -14,8 +14,7 @@ public record FinancialMovementDTO(
         LocalDate movementDate,
         LocalDate dueDate,
         LocalDate payDate,
-        FinancialMovementStatus status,
-        Boolean flagActive
+        FinancialMovementStatus status
 ) {
 
     @Override

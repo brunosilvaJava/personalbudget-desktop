@@ -12,8 +12,7 @@ public record InstallmentBillDTO(
         BigDecimal amount,
         InstallmentBillStatus status,
         LocalDate purchaseDate,
-        Integer installmentCount,
-        Boolean active
+        Integer installmentCount
 ) {
 
     @Override

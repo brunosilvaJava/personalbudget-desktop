@@ -128,8 +128,7 @@ public class InstallmentBillFormController
                 Strings.isNotEmpty(amountField.getText()) ? new BigDecimal(amountField.getText()) : null,
                 findStatus(),
                 purchaseDatePicker.getValue(),
-                Strings.isNotEmpty(installmentCount.getText()) ? Integer.parseInt(installmentCount.getText()) : null,
-                activeRadio.isSelected()
+                Strings.isNotEmpty(installmentCount.getText()) ? Integer.parseInt(installmentCount.getText()) : null
         );
     }
 

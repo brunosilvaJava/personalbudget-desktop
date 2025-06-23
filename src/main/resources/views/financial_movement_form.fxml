@@ -50,9 +50,6 @@
         <Label text="Data de Pagamento:" GridPane.rowIndex="9" />
         <DatePicker fx:id="payDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
-        <Label text="Ativo:" GridPane.rowIndex="10" />
-        <RadioButton fx:id="activeRadio" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-
         <HBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="11">
             <Button onAction="#cleanForm" text="Limpar" />
             <Button onAction="#actionSaveButton" text="Salvar" />
@@ -70,7 +67,6 @@
             <TableColumn fx:id="movementDateColumn" text="Data da Movimentação" prefWidth="120.0" />
             <TableColumn fx:id="dueDateColumn" text="Data de Vencimento" prefWidth="120.0" />
             <TableColumn fx:id="payDateColumn" text="Data de Pagamento" prefWidth="120.0" />
-            <TableColumn fx:id="activeColumn" text="Ativo" prefWidth="60.0" resizable="false" />
         </columns>
     </TableView>
 </VBox>

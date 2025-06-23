@@ -6,6 +6,7 @@ import com.bts.personalbudgetdesktop.model.FinancialMovementStatus;
 import com.bts.personalbudgetdesktop.service.FinancialMovementService;
 import com.bts.personalbudgetdesktop.view.FinancialMovementView;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -96,8 +97,7 @@ public class FinancialMovementFormController
                 movementDatePicker.getValue(),
                 dueDatePicker.getValue(),
                 payDatePicker.getValue() != null ? payDatePicker.getValue() : null,
-                findStatus(),
-                activeRadio.isSelected()
+                findStatus()
         );
     }
 
@@ -146,7 +146,8 @@ public class FinancialMovementFormController
 
     @Override
     protected List<FinancialMovementDTO> findAll() {
-        return financialMovementService.findAll();
+        return financialMovementService.findAll(LocalDate.now().minusYears(1),
+                LocalDate.now().plusYears(1), null, null, null);
     }
 
     private void showValidationErrors(Set<String> errors) {
